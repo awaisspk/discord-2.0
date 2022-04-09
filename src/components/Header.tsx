@@ -16,7 +16,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <header className="px-6 h-[80px] bg-blue-600 w-full flex items-center justify-between">
+      <header className="px-5 md:px-10 h-[80px] bg-blue-600 w-full flex items-center justify-between">
         <a href="/">
           <img
             alt=""

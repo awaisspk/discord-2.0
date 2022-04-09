@@ -3,7 +3,7 @@ import { Button } from "./Button";
 
 export const HeroSection = () => {
   return (
-    <div className="w-full px-5 h-[calc(100vh-80px)]  pt-24 bg-blue-600">
+    <div className="w-full px-5 md:px-10 h-[calc(100vh-80px)]  pt-24 bg-blue-600">
       <section className="text-white flex flex-col gap-7">
         <h1 className="text-3xl md:text-5xl font-bold">Your place to talk</h1>
         <p className="max-w-[70ch] text-lg">
