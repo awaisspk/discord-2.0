@@ -31,7 +31,7 @@ const Header = () => {
             "flex-col justify-center items-center space-y-3 absolute top-[80px] inset-x-0 h-[calc(100vh-80px)]  transition-all bg-white",
             "md:relative md:flex-row md:space-y-0 md:top-0 md:h-max md:bg-transparent md:space-x-4",
             {
-              "duration-200 opacity-0": isOpen,
+              "duration-200 opacity-0": !isOpen,
             }
           )}
         >
