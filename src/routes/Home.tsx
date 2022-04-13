@@ -10,6 +10,7 @@ import {
   SettingsIcon,
 } from "../assets/icons";
 import { Channel } from "../components/Channel";
+import { Chat } from "../components/Chat";
 import { ServerIcon } from "../components/ServerIcon";
 
 import { auth, db, app } from "../firestore";
@@ -50,7 +51,7 @@ export const Home = () => {
             <PlusIcon className="stroke-green-500 w-7 h-7 sm:w-9 sm:h-9" />
           </button>
         </div>
-        <div className="bg-discord_channelsBg grid grid-rows-[max-content_1fr_max-content]  max-w-full w-[200px] sm:w-[250px]">
+        <div className="bg-discord_channelsBg grid grid-rows-[max-content_1fr_max-content] shrink-0 max-w-full ww-[200px]-[200px] sm:w-[250px]">
           <div>
             <div className="flex py-3 px-2 hover:bg-gray-700/20 justify-between items-center cursor-pointer">
               <h2 className="text-white text-sm font-bold">
@@ -103,6 +104,9 @@ export const Home = () => {
               <SettingsIcon className="w-6 h-6 sm:w-7 sm:h-7 stroke-gray-200 stroke-1 hover:stroke-gray-400 cursor-pointer" />
             </div>
           </div>
+        </div>
+        <div className="grow">
+          <Chat />
         </div>
       </section>
     </>
