@@ -1,7 +1,14 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 import React, { useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector } from "react-redux";
 import {
   BellIcon,
@@ -15,6 +22,7 @@ import {
 } from "../assets/icons";
 import { selectChannelId, selectChannelName } from "../feature/channelSlice";
 import { auth, db } from "../firestore";
+import { Message } from "./Message";
 
 const ChatHeader = () => {
   const channelName = useSelector(selectChannelName);
@@ -48,9 +56,14 @@ const ChatHeader = () => {
 export const Chat = () => {
   const [user] = useAuthState(auth);
   const channelId = useSelector(selectChannelId);
-  const [messages] = useCollection(
-    collection(db, "channels", channelId, "messages")
+  const [messages, loading] = useCollectionData(
+    channelId &&
+      query(
+        collection(db, "channels", channelId && channelId, "messages"),
+        orderBy("timestamp")
+      )
   );
+
   const inputRef = useRef<HTMLInputElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
@@ -77,14 +90,26 @@ export const Chat = () => {
   };
 
   return (
-    <section className="bg-[#36393f] w-full h-full text-gray-200 grid grid-rows-[max-content_1fr_max-content]">
+    <section className="bg-[#36393f] w-full h-screen max-h-screen text-gray-200 grid grid-rows-[max-content_1fr_max-content]">
       <ChatHeader />
-      <main>
-        <div ref={chatRef} className="pb-16">
-          {messages?.docs.map((message) => {
-            return <div>{message.data().message}</div>;
-          })}
-        </div>
+      <main className="overflow-auto scrollbar-hide pb-16">
+        {loading && <div>loading...</div>}
+        {messages?.map((doc) => {
+          const { message, timestamp, name, photoUrl, email } = doc;
+          return (
+            <div ref={chatRef} className="px-4">
+              <Message
+                key={doc.id}
+                id={doc.id}
+                message={message}
+                timestamp={timestamp}
+                name={name}
+                photoUrl={photoUrl}
+                email={email}
+              />
+            </div>
+          );
+        })}
       </main>
       <div className="flex space-x-2 items-center w-[98%] rounded-xl px-2 mb-1.5 mx-auto h-[55px] bg-discord_channelsBg/90">
         <div className="rounded-full bg-gray-400 p-0.5">
